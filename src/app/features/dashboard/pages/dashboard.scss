@@ -1,0 +1,21 @@
+.picture {
+  width: 100%;
+  max-width: 22.5rem;
+  border-radius: 25% 25% 0% 0%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  max-width: 22.5rem;
+}
