@@ -1,5 +1,11 @@
 <main>
-  <h1>{{ teste }}</h1>
-
-  <span>{{ subtitle }}</span>
+  <section class="bg-dark">
+    <div class="container gap-4">
+      <div class="row">
+        @for (character of characters$; track character.id) {
+        <component-item-character [character]="character" />
+        }
+      </div>
+    </div>
+  </section>
 </main>
