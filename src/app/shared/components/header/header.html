@@ -1,0 +1,30 @@
+<header class="sticky-top bg-white">
+  <div>
+    <div class="container-xxl d-flex justify-content-between align-items-center py-3 border-bottom">
+      <a routerLink="/">
+        <span class="title h4">Rick and Morty</span>
+      </a>
+
+      <nav>
+        <ul class="d-flex gap-4 nav-list">
+          <li>
+            <a
+              routerLink="/"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Página inicial</a
+            >
+          </li>
+          <li><a routerLink="/characters" [routerLinkActive]="'active'">Personagens</a></li>
+          <li><a routerLink="/locations" [routerLinkActive]="'active'">Localizações</a></li>
+          <li><a routerLink="/episodes" [routerLinkActive]="'active'">Episódios</a></li>
+        </ul>
+      </nav>
+
+      <div class="d-flex gap-2">
+        <component-button variant="outline-primary">Login</component-button>
+        <component-button variant="primary">Sign Up</component-button>
+      </div>
+    </div>
+  </div>
+</header>

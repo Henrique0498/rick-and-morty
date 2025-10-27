@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'bootstrap' as *;
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+body {
+  font-family: Roboto, 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  margin: 0;
+  padding: 0;
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: var(--bs-body);
+    text-decoration: none;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title {
+  font-weight: 500;
+  font-family: 'Caveat', cursive, 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
