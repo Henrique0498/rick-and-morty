@@ -1,6 +1,6 @@
 <main>
   <section class="container d-flex flex-column align-items-center pt-5 gap-5">
-    <h1 class="title">Localizações de<span>Rick e Morty</span></h1>
+    <h1 class="title">Episódios de<span>Rick e Morty</span></h1>
 
     <picture class="picture border border-4 border-dark border-bottom-0">
       <source srcset="images/dashboard-rick-and-morty.jpg" type="image/svg+xml" />
@@ -22,20 +22,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let location of locations$ | async">
-                <th scope="row">{{ location.id }}</th>
-                <td>{{ location.name }}</td>
-                <td>{{ location.dimension }}</td>
-                <td><component-button>Detalhes</component-button></td>
+              <tr *ngFor="let episode of episodes$ | async">
+                <th scope="row">{{ episode.id }}</th>
+                <td>{{ episode.name }}</td>
+                <td>{{ episode.air_date }}</td>
+                <td>{{ episode.episode }}</td>
               </tr>
 
               @if(loading$ | async){
               <tr>
                 <td colspan="4" class="text-center">Carregando...</td>
               </tr>
-              } @else if((locations$ | async)?.length === 0){
+              } @else if((episodes$ | async)?.length === 0){
               <tr>
-                <td colspan="4" class="text-center">Nenhuma localização encontrada.</td>
+                <td colspan="4" class="text-center">Nenhum episódio encontrado.</td>
               </tr>
               }
             </tbody>

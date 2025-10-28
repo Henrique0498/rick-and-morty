@@ -12,21 +12,30 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TypeLocation } from '../../../core/services/apis/locations/types';
 import { LocationApiService } from '../../../core/services/apis/locations';
 import { ItemLocation } from '../../../shared/components/ItemLocation/item-location';
+import { ButtonComponent } from '../../../shared/components/button/button';
 
 @Component({
   selector: 'location-page',
   templateUrl: './location.html',
   styleUrl: './location.scss',
-  imports: [CommonModule, ItemLocation],
+  imports: [CommonModule, ButtonComponent],
 })
 export class LocationsPage implements AfterViewInit {
   private page$ = new BehaviorSubject(1);
   private searchTerm$ = new BehaviorSubject('');
   private totalPage: number | undefined = undefined;
-  private loading$ = new BehaviorSubject(false);
+  loading$ = new BehaviorSubject(false);
   locations$ = combineLatest([this.page$, this.searchTerm$]).pipe(
     switchMap(([page, search]) => {
-      return this.locationService.findAll({ page, name: search }) ?? [];
+      if (!this.loading$.value) {
+        this.loading$.next(true);
+
+        return this.locationService
+          .findAll({ page, name: search })
+          .pipe(finalize(() => this.loading$.next(false)));
+      }
+
+      return [];
     }),
     scan((acc: TypeLocation[], res) => {
       if (res.info?.prev === null) {
@@ -34,8 +43,7 @@ export class LocationsPage implements AfterViewInit {
         return res.results;
       }
       return [...acc, ...res.results];
-    }, []),
-    finalize(() => this.loading$.next(false))
+    }, [])
   );
   @ViewChild('infiniteAnchor', { static: true })
   infiniteAnchor!: ElementRef<HTMLDivElement>;
@@ -64,7 +72,11 @@ export class LocationsPage implements AfterViewInit {
   loadMore() {
     const result = this.page$.value + 1;
 
-    if (!this.loading$.value && (this.totalPage === undefined || result <= this.totalPage)) {
+    if (
+      !this.loading$.value &&
+      (this.totalPage === undefined || result <= this.totalPage) &&
+      !this.loading$.value
+    ) {
       this.page$.next(result);
     }
   }

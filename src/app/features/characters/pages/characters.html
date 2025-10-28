@@ -11,9 +11,11 @@
   <section class="bg-dark py-4">
     <div class="container">
       <div class="row gx-3 gy-3">
-        <div class="col-3" *ngFor="let character of characters$ | async">
+        @for (character of characters$ | async; track character.id) {
+        <div class="col-3">
           <component-item-character [character]="character" />
         </div>
+        }
       </div>
 
       <div #infiniteAnchor style="height: 1px"></div>

@@ -6,49 +6,52 @@ import {
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
-import { CharactersApiService } from '../../../core/services/apis/characters';
-import { ItemCharacter } from '../../../shared/components/ItemCharacter/item-character';
 import { BehaviorSubject, combineLatest, switchMap, scan, finalize } from 'rxjs';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { TypeCharacter } from '../../../core/services/apis/characters/types';
+import { TypeEpisode } from '../../../core/services/apis/episodes/types';
+import { EpisodesApiService } from '../../../core/services/apis/episodes';
 
 @Component({
-  selector: 'characters-page',
-  templateUrl: './characters.html',
-  styleUrl: './characters.scss',
-  imports: [ItemCharacter, CommonModule],
+  selector: 'episodes-page',
+  templateUrl: './episodes.html',
+  styleUrl: './episodes.scss',
+  imports: [CommonModule],
 })
-export class CharactersPage implements AfterViewInit {
+export class EpisodesPage implements AfterViewInit {
   private page$ = new BehaviorSubject(1);
   private searchTerm$ = new BehaviorSubject('');
   private totalPage: number | undefined = undefined;
   loading$ = new BehaviorSubject(false);
-  characters$ = combineLatest([this.page$, this.searchTerm$]).pipe(
+
+  episodes$ = combineLatest([this.page$, this.searchTerm$]).pipe(
     switchMap(([page, search]) => {
       if (!this.loading$.value) {
         this.loading$.next(true);
 
-        return this.characterService
+        return this.episodeService
           .findAll({ page, name: search })
           .pipe(finalize(() => this.loading$.next(false)));
       }
 
       return [];
     }),
-    scan((acc: TypeCharacter[], res) => {
+    scan((acc: TypeEpisode[], res) => {
       if (res.info?.prev === null) {
         this.totalPage = res.info?.pages ?? 1;
+
         return res.results;
       }
+
       return [...acc, ...res.results];
     }, []),
     finalize(() => this.loading$.next(false))
   );
+
   @ViewChild('infiniteAnchor', { static: true })
   infiniteAnchor!: ElementRef<HTMLDivElement>;
 
   constructor(
-    private characterService: CharactersApiService,
+    private episodeService: EpisodesApiService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -59,6 +62,7 @@ export class CharactersPage implements AfterViewInit {
           this.loadMore();
         }
       });
+
       observer.observe(this.infiniteAnchor.nativeElement);
     }
   }
