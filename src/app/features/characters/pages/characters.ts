@@ -1,51 +1,59 @@
-import { Component, signal } from '@angular/core';
-import { TypeCharacter, TypeGetAllCharacters } from '../../../core/services/apis/characters/types';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { CharactersApiService } from '../../../core/services/apis/characters';
 import { ItemCharacter } from '../../../shared/components/ItemCharacter/item-character';
+import { BehaviorSubject, combineLatest, switchMap, scan } from 'rxjs';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { TypeCharacter } from '../../../core/services/apis/characters/types';
 
 @Component({
   selector: 'characters-page',
   templateUrl: './characters.html',
   styleUrl: './characters.scss',
-  imports: [ItemCharacter],
+  imports: [ItemCharacter, CommonModule],
 })
-export class CharactersPage {
-  characters$: TypeCharacter[] = [];
+export class CharactersPage implements AfterViewInit {
+  private page$ = new BehaviorSubject(1);
+  private searchTerm$ = new BehaviorSubject('');
+  private loading$ = false;
+  characters$ = combineLatest([this.page$, this.searchTerm$]).pipe(
+    switchMap(([page, search]) => this.characterService.findAll({ page, name: search })),
+    scan((acc: TypeCharacter[], res) => {
+      if (res.info?.prev === null) return res.results;
+      return [...acc, ...res.results];
+    }, [])
+  );
+  @ViewChild('infiniteAnchor', { static: true })
+  infiniteAnchor!: ElementRef<HTMLDivElement>;
 
-  alertDisabled = true;
-  alertMessage = '';
-  alertType: 'success' | 'error' = 'success';
+  constructor(
+    private characterService: CharactersApiService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
-  constructor(private userService: CharactersApiService) {
-    this.getUsers();
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.loadMore();
+        }
+      });
+      observer.observe(this.infiniteAnchor.nativeElement);
+    }
   }
 
-  getUsers() {
-    this.userService.findAll({ page: 1 }).subscribe({
-      next: (users) => (this.characters$ = users.results),
-      error: () => this.messageError('Falha ao carregar os usuários'),
-    });
+  onSearch(term: string) {
+    this.page$.next(1);
+    this.searchTerm$.next(term.trim());
   }
 
-  messageSuccess(message: string) {
-    this.alertType = 'success';
-    this.alertMessage = message;
-    this.alertDisabled = false;
-
-    this.alertTimeOut();
-  }
-
-  messageError(message: string) {
-    this.alertType = 'error';
-    this.alertMessage = message;
-    this.alertDisabled = false;
-
-    this.alertTimeOut();
-  }
-
-  alertTimeOut() {
-    setTimeout(() => {
-      this.alertDisabled = true;
-    }, 2000);
+  loadMore() {
+    this.page$.next(this.page$.value + 1);
   }
 }

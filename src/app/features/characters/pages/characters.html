@@ -1,11 +1,22 @@
 <main>
-  <section class="bg-dark">
-    <div class="container gap-4">
-      <div class="row">
-        @for (character of characters$; track character.id) {
-        <component-item-character [character]="character" />
-        }
+  <section class="container d-flex flex-column align-items-center pt-5 gap-5">
+    <h1 class="title">Personagens de<span>Rick e Morty</span></h1>
+
+    <picture class="picture border border-4 border-dark border-bottom-0">
+      <source srcset="images/dashboard-rick-and-morty.jpg" type="image/svg+xml" />
+      <img src="images/dashboard-rick-and-morty.jpg" alt="Imagem do Rick e Morty" />
+    </picture>
+  </section>
+
+  <section class="bg-dark py-4">
+    <div class="container">
+      <div class="row gx-3 gy-3">
+        <div class="col-3" *ngFor="let character of characters$ | async">
+          <component-item-character [character]="character" />
+        </div>
       </div>
+
+      <div #infiniteAnchor style="height: 1px"></div>
     </div>
   </section>
 </main>
