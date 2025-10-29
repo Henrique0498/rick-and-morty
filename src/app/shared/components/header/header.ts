@@ -7,8 +7,4 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class HeaderComponent {
-  protected readonly title = signal('rick-and-morty');
-  teste = 'Titulo';
-  subtitle = 'A simple application to browse the Rick and Morty API';
-}
+export class HeaderComponent {}

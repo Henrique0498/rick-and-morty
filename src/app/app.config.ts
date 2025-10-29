@@ -10,6 +10,8 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { authReducer } from '@core/store/auth/auth.reducer';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,5 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideStore(),
     provideHttpClient(withFetch()),
+    provideToastr(),
+    provideAnimations(),
   ],
 };

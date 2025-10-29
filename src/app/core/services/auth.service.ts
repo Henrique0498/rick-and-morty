@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, finalize, map } from 'rxjs/operators';
 
 export interface User {
   id: number;
@@ -26,9 +26,22 @@ export class AuthService {
     return of(this.users).pipe(
       delay(1000),
       map((users) => {
-        const user = users.find((u) => u.email === email);
-        if (!user) throw new Error('Usuário não encontrado');
+        const user = users.find((user) => user.email === email);
+
+        if (!user) {
+          throw new Error('Credenciais inválidas');
+        }
+
         return { user, token: 'mock-token-123' };
+      })
+    );
+  }
+
+  logout() {
+    return of(null).pipe(
+      delay(500),
+      finalize(() => {
+        localStorage.removeItem('auth_token');
       })
     );
   }

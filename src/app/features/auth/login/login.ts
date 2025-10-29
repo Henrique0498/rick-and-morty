@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { AuthService } from '@core/services/auth.service';
 import { Store } from '@ngrx/store';
 import { loginSuccess } from '@core/store/auth/auth.actions';
 import { finalize } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'login-page',
@@ -19,6 +20,8 @@ export class LoginPage {
   private auth = inject(AuthService);
   private router = inject(Router);
   private store = inject(Store);
+  private toastr = inject(ToastrService);
+  private cdr = inject(ChangeDetectorRef);
 
   form: FormGroup;
   loading = false;
@@ -32,7 +35,9 @@ export class LoginPage {
   }
 
   submit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      return;
+    }
 
     this.loading = true;
     this.error = null;
@@ -41,13 +46,26 @@ export class LoginPage {
 
     this.auth
       .login(email, password)
-      .pipe(finalize(() => (this.loading = false)))
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        })
+      )
       .subscribe({
         next: ({ user, token }) => {
+          localStorage.setItem('auth_token', token);
           this.store.dispatch(loginSuccess({ user, token }));
           this.router.navigate(['/']);
         },
-        error: (err) => (this.error = err.message),
+        error: (err) => {
+          const message = err.message ?? 'Falha ao fazer login. Tente novamente.';
+
+          this.toastr.error(message, 'Error ao fazer login');
+
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
       });
   }
 }
