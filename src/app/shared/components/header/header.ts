@@ -1,10 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { ButtonComponent } from '../button/button';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'component-header',
-  imports: [ButtonComponent, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })

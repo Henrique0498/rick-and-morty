@@ -25,6 +25,12 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/episodes/episodes.routes').then((m) => m.EPISODES_ROUTES),
   },
+
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+
   {
     path: '**',
     component: NotFoundPage,

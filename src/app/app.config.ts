@@ -9,11 +9,14 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { authReducer } from '@core/store/auth/auth.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+
+    provideStore({ auth: authReducer }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideStore(),
