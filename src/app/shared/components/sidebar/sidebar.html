@@ -7,11 +7,15 @@
           routerLink="/"
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
-          >Página inicial</a
+        >
+          <ng-icon name="heroHome" size="24px" />
+          Página inicial</a
         >
       </li>
       <li>
-        <a class="nav-link" routerLink="/characters" [routerLinkActive]="'active'">Personagens</a>
+        <a class="nav-link" routerLink="/characters" [routerLinkActive]="'active'">
+          <ng-icon name="heroHome" size="24px" />Personagens</a
+        >
       </li>
       <li>
         <a class="nav-link" routerLink="/locations" [routerLinkActive]="'active'">Localizações</a>

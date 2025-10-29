@@ -12,7 +12,6 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { authReducer } from '@core/store/auth/auth.reducer';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +23,5 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideToastr(),
     provideAnimations(),
-    provideEffects()
-],
+  ],
 };
