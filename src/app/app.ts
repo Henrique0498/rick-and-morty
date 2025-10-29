@@ -1,18 +1,16 @@
-import { Component, importProvidersFrom, LOCALE_ID, signal } from '@angular/core';
+import { Component, LOCALE_ID, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header';
 import { FooterComponent } from './shared/components/footer/footer';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
-import { appStore } from './app.store';
-import { provideStore, StoreModule } from '@ngrx/store';
-import { authReducer } from '@core/store/auth/auth.reducer';
+import { SidebarComponent } from '@shared/components/sidebar/sidebar';
 
 registerLocaleData(ptBr);
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, SidebarComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],

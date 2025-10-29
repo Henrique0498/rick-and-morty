@@ -21,7 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideStore({ auth: authReducer }),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideStore(),
     provideHttpClient(withFetch()),
     provideToastr(),
     provideAnimations(),

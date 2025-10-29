@@ -1,0 +1,9 @@
+.sidebar-container {
+  width: 250px;
+
+  .sidebar {
+    width: 250px;
+    height: calc(100vh - 4.25rem);
+    position: fixed;
+  }
+}

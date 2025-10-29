@@ -29,7 +29,7 @@ export class AuthService {
         const user = users.find((user) => user.email === email);
 
         if (!user) {
-          throw new Error('Credenciais inválidas');
+          throw new Error('Credenciais inválidas d');
         }
 
         return { user, token: 'mock-token-123' };

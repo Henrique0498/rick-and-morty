@@ -1,0 +1,24 @@
+<div class="sidebar-container">
+  <div class="d-flex flex-column flex-shrink-0 p-3 sidebar border-end bg-light">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li>
+        <a
+          class="nav-link"
+          routerLink="/"
+          [routerLinkActive]="'active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Página inicial</a
+        >
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/characters" [routerLinkActive]="'active'">Personagens</a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/locations" [routerLinkActive]="'active'">Localizações</a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/episodes" [routerLinkActive]="'active'">Episódios</a>
+      </li>
+    </ul>
+  </div>
+</div>

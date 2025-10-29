@@ -1,9 +1,17 @@
 <div>
   <component-header />
 
-  <div>
-    <router-outlet />
-  </div>
+  <div class="d-flex">
+    <component-sidebar />
 
-  <component-footer />
+    <div class="flex-fill">
+      <div>
+        <router-outlet />
+      </div>
+
+      <div>
+        <component-footer />
+      </div>
+    </div>
+  </div>
 </div>
