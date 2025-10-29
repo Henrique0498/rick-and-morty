@@ -18,20 +18,28 @@
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Data de Lançamento</th>
-                <th scope="col">Número do Episódio</th>
+                <th scope="col">Aparição</th>
+                <th scope="col">Ações</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let episode of episodes$ | async">
+              @for(episode of episodes$ | async; track episode.id){
+              <tr>
                 <th scope="row">{{ episode.id }}</th>
                 <td>{{ episode.name }}</td>
-                <td>{{ episode.air_date }}</td>
-                <td>{{ episode.episode }}</td>
+                <td>{{ episode.air_date | date : 'mediumDate' }}</td>
+                <td>{{ episode.episode | episodeFormat }}</td>
+                <td>
+                  <a [routerLink]="['/episodes', episode.id]" class="btn btn-primary btn-sm"
+                    >Detalhes</a
+                  >
+                </td>
               </tr>
-
-              @if(loading$ | async){
+              } @if(loading$ | async){
               <tr>
-                <td colspan="4" class="text-center">Carregando...</td>
+                <td colspan="4" [class.table-loading]="isFirstLoad$ | async" class="text-center">
+                  Carregando...
+                </td>
               </tr>
               } @else if((episodes$ | async)?.length === 0){
               <tr>

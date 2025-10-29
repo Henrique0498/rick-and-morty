@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { CharactersPage } from './features/characters/pages/characters';
 import { DashboardPage } from './features/dashboard/pages/dashboard';
 import { NotFoundPage } from './features/notfound/page/notfound';
-import { EpisodesPage } from './features/episodes/pages/episodes';
 
 export const routes: Routes = [
   {
@@ -23,7 +22,8 @@ export const routes: Routes = [
 
   {
     path: 'episodes',
-    component: EpisodesPage,
+    loadChildren: () =>
+      import('./features/episodes/episodes.routes').then((m) => m.EPISODES_ROUTES),
   },
   {
     path: '**',

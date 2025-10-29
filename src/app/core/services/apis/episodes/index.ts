@@ -14,7 +14,7 @@ export class EpisodesApiService {
     return this.httpCLient.get<TypeGetAllEpisodes>(this._baseUrl, { params });
   }
 
-  findOne(id: number) {
+  findOne(id: number | string) {
     return this.httpCLient.get<TypeEpisode>(`${this._baseUrl}/${id}`);
   }
 }

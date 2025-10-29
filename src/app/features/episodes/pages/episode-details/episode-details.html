@@ -1,0 +1,22 @@
+<main class="container">
+  <section>
+    <header class="my-4 d-flex align-items-center gap-3">
+      <a routerLink="/episodes" class="btn btn-secondary">Voltar</a>
+      <h2>Detalhes do Episódio</h2>
+    </header>
+  </section>
+
+  <section class="row d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card" *ngIf="episode$ | async as episode">
+      <div class="card-header">
+        <h1>{{ episode.name }}</h1>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Data de exibição:</strong> {{ episode.air_date | date : 'mediumDate' }}</p>
+        <p><strong>Episódio:</strong> {{ episode.episode | episodeFormat }}</p>
+        <p><strong>Data de criação:</strong> {{ episode.created | date : 'mediumDate' }}</p>
+      </div>
+    </div>
+  </section>
+</main>
