@@ -1,0 +1,23 @@
+<main class="container">
+  <section>
+    <header class="my-4 d-flex align-items-center gap-3">
+      <a routerLink="/locations" class="btn btn-secondary">Voltar</a>
+      <h2>Detalhes da Localização</h2>
+    </header>
+  </section>
+
+  <section class="row d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card" *ngIf="location$ | async as location">
+      <div class="card-header">
+        <h1>{{ location.name }}</h1>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Tipo:</strong> {{ location.type }}</p>
+        <p><strong>Dimensão:</strong> {{ location.dimension }}</p>
+        <p><strong>Número de Residentes:</strong> {{ location.residents.length }}</p>
+        <p><strong>Data de Criação:</strong> {{ date$ | async }}</p>
+      </div>
+    </div>
+  </section>
+</main>

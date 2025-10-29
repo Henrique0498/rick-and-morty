@@ -11,6 +11,13 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
+    "baseUrl": "src",
+    "paths": {
+      "@core/*": ["app/core/*"],
+      "@shared/*": ["app/shared/*"],
+      "@features/*": ["app/features/*"],
+      "@api/*": ["app/core/services/apis/*"]
+    },
     "module": "preserve"
   },
   "angularCompilerOptions": {

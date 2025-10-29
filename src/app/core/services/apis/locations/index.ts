@@ -14,7 +14,7 @@ export class LocationApiService {
     return this.httpCLient.get<TypeGetAllLocations>(this._baseUrl, { params });
   }
 
-  findOne(id: number) {
+  findOne(id: number | string) {
     return this.httpCLient.get<TypeLocation>(`${this._baseUrl}/${id}`);
   }
 }
