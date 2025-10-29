@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DashboardPage } from './features/dashboard/pages/dashboard';
 import { NotFoundPage } from './features/notfound/page/notfound';
+import { authGuard } from '@core/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,12 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+  },
+
+  {
+    path: 'profile',
+    loadChildren: () => import('./features/profiles/profile.route').then((m) => m.PROFILE_ROUTES),
+    canActivate: [authGuard],
   },
 
   {

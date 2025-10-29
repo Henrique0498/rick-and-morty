@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { selectUser } from '@core/store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 
@@ -12,5 +12,17 @@ import { Store } from '@ngrx/store';
 })
 export class HeaderComponent {
   private store = inject(Store);
+  router = inject(Router);
   user$ = this.store.select(selectUser);
+
+  isMenuOpen = signal(false);
+
+  toggleMenu() {
+    this.isMenuOpen.update((isOpen) => !isOpen);
+  }
+
+  logout() {
+    this.store.dispatch({ type: '[Auth] Logout' });
+    this.router.navigate(['/auth/login']);
+  }
 }

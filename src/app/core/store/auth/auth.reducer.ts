@@ -4,6 +4,6 @@ import { initialAuthState } from './auth.state';
 
 export const authReducer = createReducer(
   initialAuthState,
-  on(loginSuccess, (state, { user, token }) => ({ ...state, user, token })),
-  on(logout, () => initialAuthState)
+  on(loginSuccess, (state, { user }) => ({ ...state, user, loaded: true })),
+  on(logout, (state) => ({ ...state, user: null, loaded: true }))
 );
