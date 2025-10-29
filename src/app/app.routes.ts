@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { CharactersPage } from './features/characters/pages/characters';
 import { DashboardPage } from './features/dashboard/pages/dashboard';
 import { NotFoundPage } from './features/notfound/page/notfound';
 
@@ -11,7 +10,8 @@ export const routes: Routes = [
 
   {
     path: 'characters',
-    component: CharactersPage,
+    loadChildren: () =>
+      import('./features/characters/characters.routes').then((m) => m.CHARACTERS_ROUTES),
   },
 
   {

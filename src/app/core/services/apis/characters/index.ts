@@ -14,7 +14,7 @@ export class CharactersApiService {
     return this.httpCLient.get<TypeGetAllCharacters>(this._baseUrl, { params });
   }
 
-  findOne(id: number) {
+  findOne(id: number | string) {
     return this.httpCLient.get<TypeCharacter>(`${this._baseUrl}/${id}`);
   }
 }

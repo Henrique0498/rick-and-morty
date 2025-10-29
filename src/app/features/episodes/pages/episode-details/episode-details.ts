@@ -3,8 +3,6 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EpisodesApiService } from '@core/services/apis/episodes';
 import { EpisodeFormatPipe } from '@shared/pipes/episode-format.pipe';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { map, switchMap } from 'rxjs';
 
 @Component({

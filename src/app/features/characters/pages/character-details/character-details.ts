@@ -1,22 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { LocationApiService } from '@core/services/apis/locations';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { CharactersApiService } from '@core/services/apis/characters';
 import { map, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'location-page',
-  templateUrl: './location-details.html',
-  styleUrl: './location-details.scss',
+  selector: 'character-page',
+  templateUrl: './character-details.html',
+  styleUrl: './character-details.scss',
   imports: [RouterLink, CommonModule],
 })
-export class LocationDetailsPage {
+export class CharacterDetailsPage {
   private route = inject(ActivatedRoute);
-  private apiService = inject(LocationApiService);
+  private apiService = inject(CharactersApiService);
 
-  location$ = this.route.paramMap.pipe(
+  character$ = this.route.paramMap.pipe(
     map((params) => params.get('id')),
     switchMap((id) => {
       if (id) return this.apiService.findOne(id);

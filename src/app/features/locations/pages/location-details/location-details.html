@@ -16,7 +16,7 @@
         <p><strong>Tipo:</strong> {{ location.type }}</p>
         <p><strong>Dimensão:</strong> {{ location.dimension }}</p>
         <p><strong>Número de Residentes:</strong> {{ location.residents.length }}</p>
-        <p><strong>Data de Criação:</strong> {{ date$ | async }}</p>
+        <p><strong>Data de Criação:</strong> {{ location.created | date : 'longDate' }}</p>
       </div>
     </div>
   </section>

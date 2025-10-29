@@ -14,8 +14,8 @@ import { LocationApiService } from '@core/services/apis/locations';
 
 @Component({
   selector: 'location-page',
-  templateUrl: './location.html',
-  styleUrl: './location.scss',
+  templateUrl: './locations.html',
+  styleUrl: './locations.scss',
   imports: [CommonModule, RouterLink],
 })
 export class LocationsPage implements AfterViewInit {

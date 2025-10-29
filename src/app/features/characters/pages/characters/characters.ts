@@ -1,36 +1,47 @@
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
-  ViewChild,
-  AfterViewInit,
-  Inject,
+  inject,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
-import { CharactersApiService } from '../../../core/services/apis/characters';
-import { ItemCharacter } from '../../../shared/components/ItemCharacter/item-character';
-import { BehaviorSubject, combineLatest, switchMap, scan, finalize } from 'rxjs';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { TypeCharacter } from '../../../core/services/apis/characters/types';
+import { RouterLink } from '@angular/router';
+import { CharactersApiService } from '@core/services/apis/characters';
+import { TypeCharacter } from '@core/services/apis/characters/types';
+import { BehaviorSubject, combineLatest, finalize, scan, switchMap } from 'rxjs';
 
 @Component({
   selector: 'characters-page',
   templateUrl: './characters.html',
   styleUrl: './characters.scss',
-  imports: [ItemCharacter, CommonModule],
+  imports: [CommonModule, RouterLink],
 })
 export class CharactersPage implements AfterViewInit {
+  private apiService = inject(CharactersApiService);
+  private platformId = inject(PLATFORM_ID);
+  private totalPage: number | undefined = undefined;
+
   private page$ = new BehaviorSubject(1);
   private searchTerm$ = new BehaviorSubject('');
-  private totalPage: number | undefined = undefined;
+
+  @ViewChild('infiniteAnchor', { static: true })
+  infiniteAnchor!: ElementRef<HTMLDivElement>;
   loading$ = new BehaviorSubject(false);
+  isFirstLoad$ = new BehaviorSubject(true);
+
   characters$ = combineLatest([this.page$, this.searchTerm$]).pipe(
     switchMap(([page, search]) => {
       if (!this.loading$.value) {
         this.loading$.next(true);
 
-        return this.characterService
-          .findAll({ page, name: search })
-          .pipe(finalize(() => this.loading$.next(false)));
+        return this.apiService.findAll({ page, name: search }).pipe(
+          finalize(() => {
+            this.loading$.next(false);
+            this.isFirstLoad$.next(false);
+          })
+        );
       }
 
       return [];
@@ -41,16 +52,8 @@ export class CharactersPage implements AfterViewInit {
         return res.results;
       }
       return [...acc, ...res.results];
-    }, []),
-    finalize(() => this.loading$.next(false))
+    }, [])
   );
-  @ViewChild('infiniteAnchor', { static: true })
-  infiniteAnchor!: ElementRef<HTMLDivElement>;
-
-  constructor(
-    private characterService: CharactersApiService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
