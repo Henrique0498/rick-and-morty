@@ -10,6 +10,7 @@
           routerLink="/"
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenuIfMobile()"
         >
           <i>
             <ng-icon name="heroHome" />
@@ -19,7 +20,12 @@
       </li>
 
       <li>
-        <a class="nav-link" routerLink="/characters" [routerLinkActive]="'active'">
+        <a
+          class="nav-link"
+          routerLink="/characters"
+          [routerLinkActive]="'active'"
+          (click)="closeMenuIfMobile()"
+        >
           <i>
             <ng-icon name="heroUsers" />
           </i>
@@ -28,7 +34,12 @@
       </li>
 
       <li>
-        <a class="nav-link" routerLink="/locations" [routerLinkActive]="'active'">
+        <a
+          class="nav-link"
+          routerLink="/locations"
+          [routerLinkActive]="'active'"
+          (click)="closeMenuIfMobile()"
+        >
           <i>
             <ng-icon name="heroMapPin" />
           </i>
@@ -37,7 +48,12 @@
       </li>
 
       <li>
-        <a class="nav-link" routerLink="/episodes" [routerLinkActive]="'active'">
+        <a
+          class="nav-link"
+          routerLink="/episodes"
+          [routerLinkActive]="'active'"
+          (click)="closeMenuIfMobile()"
+        >
           <i>
             <ng-icon name="heroPlay" />
           </i>
@@ -49,6 +65,10 @@
     <div class="content-auth">
       @if (user$ | async; as user) {
       <div class="dropdown border">
+        <li>
+          <a class="dropdown-item" routerLink="/profile" (click)="closeMenuIfMobile()">Perfil</a>
+        </li>
+
         <div
           class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer"
           id="dropdownUser1"
@@ -63,7 +83,9 @@
           class="dropdown-menu dropdown-menu-light text-small shadow"
           aria-labelledby="dropdownUser1"
         >
-          <li><a class="dropdown-item" routerLink="/profile">Perfil</a></li>
+          <li>
+            <a class="dropdown-item" routerLink="/profile" (click)="closeMenuIfMobile()">Perfil</a>
+          </li>
 
           <li><hr class="dropdown-divider" /></li>
 
@@ -72,8 +94,12 @@
       </div>
       } @else {
       <div class="auth-buttons">
-        <a routerLink="/auth/login" class="btn btn-outline-secondary">Entrar</a>
-        <a routerLink="/auth/sing-up" class="btn btn-primary">Cadastrar</a>
+        <a routerLink="/auth/login" class="btn btn-outline-secondary" (click)="closeMenuIfMobile()"
+          >Entrar</a
+        >
+        <a routerLink="/auth/sing-up" class="btn btn-primary" (click)="closeMenuIfMobile()"
+          >Cadastrar</a
+        >
       </div>
       }
     </div>

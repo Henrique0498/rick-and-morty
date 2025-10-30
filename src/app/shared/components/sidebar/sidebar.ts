@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { heroHome, heroUsers, heroMapPin, heroPlay, heroBars3 } from '@ng-icons/heroicons/outline';
@@ -19,13 +20,22 @@ export class SidebarComponent {
   private sidebar = inject(SidebarService);
   router = inject(Router);
   user$ = this.store.select(selectUser);
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   isMenuOpen() {
     return this.sidebar.menuOpen();
   }
 
   logout() {
+    this.closeMenuIfMobile();
     this.store.dispatch({ type: '[Auth] Logout' });
     this.router.navigate(['/auth/login']);
+  }
+
+  closeMenuIfMobile() {
+    if (this.isBrowser && window.innerWidth < 768) {
+      this.sidebar.close();
+    }
   }
 }
