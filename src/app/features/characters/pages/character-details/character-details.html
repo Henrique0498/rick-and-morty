@@ -1,13 +1,14 @@
 <main class="container">
-  <section>
-    <header class="my-4 d-flex align-items-center gap-3">
+  <section class="row">
+    <div class="my-4 d-flex align-items-center gap-3">
       <a routerLink="/characters" class="btn btn-secondary">Voltar</a>
       <h2>Detalhes do Personagem</h2>
-    </header>
+    </div>
   </section>
 
-  <section class="row d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card" *ngIf="character$ | async as character">
+  <section class="row section-details">
+    @if(character$ | async ; as character){
+    <div class="card">
       <div class="card-img-top d-flex justify-content-center align-items-center p-4">
         <img
           [src]="character.image"
@@ -20,7 +21,7 @@
       </div>
 
       <div class="card-body">
-        <p><strong>Gênero:</strong> {{ character.gender }}</p>
+        <p><strong>Gênero:</strong> {{ character.gender | genderFormat }}</p>
         <p><strong>Dimensão:</strong> {{ character.origin.name }}</p>
         <p><strong>Data de Criação:</strong> {{ character.created | date : 'longDate' }}</p>
         <p><strong>Espécie:</strong> {{ character.species }}</p>
@@ -30,5 +31,6 @@
         <p><strong>Data de Criação:</strong> {{ character.created | date : 'longDate' }}</p>
       </div>
     </div>
+    }
   </section>
 </main>
