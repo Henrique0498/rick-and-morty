@@ -29,10 +29,40 @@ export class AuthService {
         const user = users.find((user) => user.email === email);
 
         if (!user) {
-          throw new Error('Credenciais inválidas d');
+          throw new Error('Credenciais inválidas');
         }
 
         return { user, token: 'mock-token-123' };
+      })
+    );
+  }
+
+  register(payload: {
+    name: string;
+    email: string;
+    password: string;
+    birthDate: string;
+    avatar?: string;
+  }) {
+    return of(null).pipe(
+      delay(1000),
+      map(() => {
+        const exists = this.users.some((u) => u.email === payload.email);
+        if (exists) {
+          throw new Error('E-mail já cadastrado');
+        }
+
+        const newUser: User = {
+          id: this.users.length ? Math.max(...this.users.map((u) => u.id)) + 1 : 1,
+          name: payload.name,
+          email: payload.email,
+          birthDate: payload.birthDate,
+          avatar: payload.avatar || 'https://i.pravatar.cc/300?img=24',
+        };
+
+        this.users.push(newUser);
+
+        return { user: newUser, token: 'mock-token-123' };
       })
     );
   }

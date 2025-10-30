@@ -1,9 +1,23 @@
 <main class="container">
   <section class="row d-flex justify-content-center align-items-center">
     <div class="card p-4 shadow" style="width: 360px">
-      <h1 class="text-center mb-4">Login</h1>
+      <h1 class="text-center mb-4">Cadastro</h1>
 
       <form [formGroup]="form" (ngSubmit)="submit()">
+        <div>
+          <label for="name" class="form-label">Nome</label>
+          <input
+            id="name"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [class.is-invalid]="form.controls['name'].invalid && form.controls['name'].touched"
+          />
+          @if(form.controls['name'].errors?.['required']){
+          <div class="invalid-feedback">Nome é obrigatório</div>
+          }
+        </div>
+
         <div>
           <label for="email" class="form-label">E-mail</label>
           <input
@@ -38,6 +52,40 @@
           }
         </div>
 
+        <div>
+          <label for="confirmPassword" class="form-label">Confirmar senha</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            class="form-control"
+            formControlName="confirmPassword"
+            [class.is-invalid]="
+              form.controls['confirmPassword'].invalid && form.controls['confirmPassword'].touched
+            "
+          />
+          @if(form.controls['confirmPassword'].errors?.['required']){
+          <div class="invalid-feedback">Confirmação de senha é obrigatória</div>
+          }
+        </div>
+
+        <div>
+          <label for="birthdate" class="form-label">Data de aniversário</label>
+          <input
+            id="birthdate"
+            type="date"
+            class="form-control"
+            formControlName="birthdate"
+            lang="pt-BR"
+            placeholder="dd/mm/aaaa"
+            [class.is-invalid]="
+              form.controls['birthdate'].invalid && form.controls['birthdate'].touched
+            "
+          />
+          @if(form.controls['birthdate'].errors?.['required']){
+          <div class="invalid-feedback">Data de aniversário é obrigatória</div>
+          }
+        </div>
+
         @if(error){
         <div class="alert alert-danger">{{ error }}</div>
         }
@@ -45,13 +93,13 @@
         <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid || loading">
           @if(loading){
           <span class="spinner-border spinner-border-sm me-2"></span>
-          } Entrar
+          } Cadastrar
         </button>
 
         <div class="text-center">
           <span>
-            Não tem uma conta?
-            <a [routerLink]="'/auth/sing-up'">Cadastre-se</a>
+            Já tem uma conta?
+            <a [routerLink]="'/auth/login'">Entrar</a>
           </span>
         </div>
       </form>

@@ -12,10 +12,10 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'login-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss'],
+  templateUrl: './sing-up.html',
+  styleUrls: ['./sing-up.scss'],
 })
-export class LoginPage {
+export class SingUpPage {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private router = inject(Router);
@@ -29,8 +29,11 @@ export class LoginPage {
 
   constructor() {
     this.form = this.fb.group({
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],
+      confirmPassword: ['', [Validators.required]],
+      birthdate: ['', [Validators.required]],
     });
   }
 
@@ -42,10 +45,23 @@ export class LoginPage {
     this.loading = true;
     this.error = null;
 
-    const { email, password } = this.form.value;
+    const { name, email, password, confirmPassword, birthdate } = this.form.value;
+
+    if (password !== confirmPassword) {
+      this.error = 'As senhas não conferem';
+      this.loading = false;
+      this.cdr.detectChanges();
+      return;
+    }
 
     this.auth
-      .login(email, password)
+      .register({
+        name,
+        email,
+        password,
+        birthDate: birthdate,
+        avatar: 'https://i.pravatar.cc/300?img=24',
+      })
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -59,12 +75,7 @@ export class LoginPage {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          const message = err.message ?? 'Falha ao fazer login. Tente novamente.';
-
-          this.toastr.error(message, 'Erro ao fazer login');
-
-          this.loading = false;
-          this.cdr.detectChanges();
+          this.error = err.message ?? 'Falha ao cadastrar. Tente novamente.';
         },
       });
   }
