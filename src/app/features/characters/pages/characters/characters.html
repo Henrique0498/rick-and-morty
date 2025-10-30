@@ -1,19 +1,23 @@
 <main>
-  <section class="container d-flex flex-column align-items-center pt-5 gap-5">
+  <section class="container section-header">
     <h1 class="title">Personagens de<span>Rick e Morty</span></h1>
 
-    <picture class="picture border border-4 border-dark border-bottom-0">
-      <source srcset="images/dashboard-rick-and-morty.jpg" type="image/svg+xml" />
-      <img src="images/dashboard-rick-and-morty.jpg" alt="Imagem do Rick e Morty" />
+    <picture class="picture">
+      <source srcset="images/bg-characters.png" type="image/svg+xml" />
+      <img src="images/bg-characters.png" alt="Imagem do Rick e Morty" />
     </picture>
   </section>
 
-  <section class="bg-dark py-4">
+  <section class="bg-dark section-table">
     <div class="container">
-      <div class="row mb-3">
-        <div class="col-12 col-md-6 ms-auto">
+      <div class="row">
+        <div class="col-12 col-md-6 d-flex">
+          <h2 class="text-white">Filtro de Personagens</h2>
+        </div>
+
+        <div class="col-12 col-md-6 ms-auto d-flex">
           <input
-            class="form-control"
+            class="form-control w-100"
             type="search"
             placeholder="Pesquisar personagem..."
             [value]="(searchTerm$ | async) ?? ''"
@@ -21,23 +25,37 @@
           />
         </div>
       </div>
-      <div class="row">
+
+      <div class="row max-w-100 overflow-auto">
         <div class="table-responsive">
-          <table class="table table-striped table-borderless">
+          <table class="table">
             <thead class="table-dark">
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Gênero</th>
-                <th scope="col">Ações</th>
+                <th scope="col" class="th-id">#</th>
+                <th scope="col" class="th-primary">Nome</th>
+                <th scope="col" class="th-secondary">Gênero</th>
+                <th scope="col" class="th-actions">Ações</th>
               </tr>
             </thead>
             <tbody class="table-body">
               @for(character of characters$ | async; track character.id){
               <tr>
-                <th scope="row">{{ character.id }}</th>
-                <td>{{ character.name }}</td>
-                <td>{{ character.gender }}</td>
+                <th scope="row">
+                  {{ character.id }}
+                </th>
+                <td>
+                  <div class="td-content-image">
+                    <img
+                      [src]="character.image"
+                      [alt]="'Imagem de ' + character.name"
+                      class="table-character-image"
+                    />
+                    <div>
+                      {{ character.name }}
+                    </div>
+                  </div>
+                </td>
+                <td>{{ character.gender | genderFormat }}</td>
                 <td>
                   <a class="btn btn-primary btn-sm" [routerLink]="['/characters', character.id]"
                     >Detalhes</a
