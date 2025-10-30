@@ -1,13 +1,20 @@
 <main class="container">
-  <section>
-    <header class="my-4 d-flex align-items-center gap-3">
+  <section class="row">
+    <div class="my-4 d-flex align-items-center gap-3">
       <a routerLink="/locations" class="btn btn-secondary">Voltar</a>
       <h2>Detalhes da Localização</h2>
-    </header>
+    </div>
   </section>
 
-  <section class="row d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card" *ngIf="location$ | async as location">
+  <section class="row section-details">
+    @if (loading()) {
+    <div class="d-flex justify-content-center gap-3">
+      <span class="spinner-border text-primary" role="status" aria-label="Carregando..."></span>
+
+      <div>Carregando...</div>
+    </div>
+    } @else if (location$ | async; as location) {
+    <div class="card">
       <div class="card-header">
         <h1>{{ location.name }}</h1>
       </div>
@@ -19,5 +26,8 @@
         <p><strong>Data de Criação:</strong> {{ location.created | date : 'longDate' }}</p>
       </div>
     </div>
+    } @else {
+    <component-not-found title="Localização não encontrada" />
+    }
   </section>
 </main>

@@ -1,7 +1,27 @@
+main {
+  display: grid;
+
+  .section-header {
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-table {
+    padding-top: 5rem;
+
+    .container {
+      display: grid;
+      gap: 4rem;
+    }
+  }
+}
+
 .picture {
   width: 100%;
   max-width: 22.5rem;
-  border-radius: 25% 25% 0% 0%;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -10,6 +30,7 @@
   img {
     width: 100%;
     height: auto;
+    object-fit: cover;
   }
 }
 
@@ -17,6 +38,7 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: 100%;
   max-width: 22.5rem;
 }
 
@@ -34,6 +56,36 @@
     td,
     th {
       vertical-align: middle;
+    }
+  }
+
+  .td-text {
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.table {
+  thead {
+    th.th-id {
+      width: 2rem;
+    }
+
+    th.th-primary {
+      width: 50%;
+    }
+
+    th.th-secondary {
+      width: auto;
+    }
+
+    th.th-actions {
+      width: auto;
     }
   }
 }
