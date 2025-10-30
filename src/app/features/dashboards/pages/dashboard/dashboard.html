@@ -84,7 +84,8 @@
   <section class="py-5 bg-dark text-light">
     <div class="container">
       <h2 class="h4 mb-4">Visão geral (ao vivo)</h2>
-      <div class="row g-3" *ngIf="stats$ | async as s">
+      @if (stats$ | async; as s) {
+      <div class="row g-3">
         <div class="col-12 col-md-4">
           <div class="p-4 bg-secondary rounded-3 text-center">
             <div class="display-6 fw-bold">{{ s.characters }}</div>
@@ -104,6 +105,7 @@
           </div>
         </div>
       </div>
+      }
       <p class="mb-0 mt-3 text-muted">Fonte: rickandmortyapi.com</p>
     </div>
   </section>
@@ -147,8 +149,6 @@
             <div class="col"><span class="badge bg-dark w-100 py-2">NgRx Store</span></div>
             <div class="col"><span class="badge bg-secondary w-100 py-2">Bootstrap 5</span></div>
             <div class="col"><span class="badge bg-dark w-100 py-2">Toastr</span></div>
-            <div class="col"><span class="badge bg-secondary w-100 py-2">date-fns</span></div>
-            <div class="col"><span class="badge bg-dark w-100 py-2">SSR-ready</span></div>
             <div class="col"><span class="badge bg-secondary w-100 py-2">TypeScript</span></div>
           </div>
         </div>
@@ -162,9 +162,13 @@
     >
       <p class="mb-0">
         Desenvolvido por <strong>Henrique0498</strong> •
-        <a href="https://github.com/Henrique0498" target="_blank" rel="noopener noreferrer"
-          >GitHub</a
+        <a
+          href="https://github.com/Henrique0498/rick-and-morty"
+          target="_blank"
+          rel="noopener noreferrer"
         >
+          GitHub
+        </a>
       </p>
       <p class="mb-0 text-muted">Projeto para fins de estudo e demonstração.</p>
     </div>

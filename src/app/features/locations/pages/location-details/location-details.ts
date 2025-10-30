@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LocationApiService } from '@core/services/apis/locations';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { map, switchMap } from 'rxjs';
 
 @Component({

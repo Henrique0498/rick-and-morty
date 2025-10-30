@@ -19,7 +19,6 @@ export class DashboardPage {
   private episodesApi = inject(EpisodesApiService);
   private locationsApi = inject(LocationApiService);
 
-  // Quick stats with total counts from the public API
   stats$: Observable<{ characters: number; episodes: number; locations: number }> = forkJoin({
     characters: this.charactersApi.findAll({ page: 1 }).pipe(map((r) => r.info.count)),
     episodes: this.episodesApi.findAll({ page: 1 }).pipe(map((r) => r.info.count)),
