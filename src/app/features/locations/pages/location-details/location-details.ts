@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LocationApiService } from '@core/services/apis/locations';
 import { NotFoundComponent } from '@shared/components/notFound/not-found';
@@ -16,7 +16,6 @@ export class LocationDetailsPage {
   private route = inject(ActivatedRoute);
   private apiService = inject(LocationApiService);
   private toast = inject(ToastrService);
-  private cdr = inject(ChangeDetectorRef);
   loading = signal(false);
 
   location$ = this.route.paramMap.pipe(

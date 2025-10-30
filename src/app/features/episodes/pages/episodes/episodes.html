@@ -1,47 +1,60 @@
 <main>
-  <section class="container d-flex flex-column align-items-center pt-5 gap-5">
+  <section class="container section-header">
     <h1 class="title">Episódios de<span>Rick e Morty</span></h1>
 
-    <picture class="picture border border-4 border-dark border-bottom-0">
-      <source srcset="images/dashboard-rick-and-morty.jpg" type="image/svg+xml" />
-      <img src="images/dashboard-rick-and-morty.jpg" alt="Imagem do Rick e Morty" />
+    <picture class="picture">
+      <source srcset="images/bg-episodes.png" type="image/svg+xml" />
+      <img src="images/bg-episodes.png" alt="Imagem do Rick e Morty" />
     </picture>
   </section>
 
-  <section class="bg-dark py-4">
+  <section class="bg-dark section-table">
     <div class="container">
-      <div class="row mb-3">
-        <div class="col-12 col-md-6 ms-auto">
+      <div class="row">
+        <div class="col-12 col-md-6 d-flex">
+          <h2 class="text-white">Filtro de Episódio</h2>
+        </div>
+
+        <div class="col-12 col-md-6 ms-auto d-flex">
           <input
-            class="form-control"
+            class="form-control w-100"
             type="search"
-            placeholder="Pesquisar episódio..."
+            placeholder="Pesquisar episódios..."
             [value]="(searchTerm$ | async) ?? ''"
             (input)="onSearch($any($event.target).value)"
           />
         </div>
       </div>
-      <div class="row">
+
+      <div class="row max-w-100 overflow-auto">
         <div class="table-responsive">
-          <table class="table table-striped table-borderless">
+          <table class="table">
             <thead class="table-dark">
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Data de Lançamento</th>
-                <th scope="col">Aparição</th>
-                <th scope="col">Ações</th>
+                <th scope="col" class="th-id">#</th>
+                <th scope="col" class="th-primary">Nome</th>
+                <th scope="col" class="th-secondary">Aparição</th>
+                <th scope="col" class="th-actions">Ações</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="table-body">
               @for(episode of episodes$ | async; track episode.id){
               <tr>
-                <th scope="row">{{ episode.id }}</th>
-                <td>{{ episode.name }}</td>
-                <td>{{ episode.air_date | date : 'mediumDate' }}</td>
-                <td>{{ episode.episode | episodeFormat }}</td>
+                <th scope="row">
+                  {{ episode.id }}
+                </th>
                 <td>
-                  <a [routerLink]="['/episodes', episode.id]" class="btn btn-primary btn-sm"
+                  <div class="td-text">
+                    {{ episode.name }}
+                  </div>
+                </td>
+                <td>
+                  <div class="td-text">
+                    {{ episode.episode | episodeFormat }}
+                  </div>
+                </td>
+                <td>
+                  <a class="btn btn-primary btn-sm" [routerLink]="['/episodes', episode.id]"
                     >Detalhes</a
                   >
                 </td>
