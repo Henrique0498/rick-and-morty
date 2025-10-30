@@ -8,9 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CharactersApiService } from '@core/services/apis/characters';
-import { TypeCharacter } from '@core/services/apis/characters/types';
-import { BehaviorSubject, combineLatest, finalize, scan, switchMap } from 'rxjs';
+import { CharactersState } from '@features/characters/state/characters.state';
 
 @Component({
   selector: 'characters-page',
@@ -19,43 +17,18 @@ import { BehaviorSubject, combineLatest, finalize, scan, switchMap } from 'rxjs'
   imports: [CommonModule, RouterLink],
 })
 export class CharactersPage implements AfterViewInit {
-  private apiService = inject(CharactersApiService);
+  private state = inject(CharactersState);
   private platformId = inject(PLATFORM_ID);
-  private totalPage: number | undefined = undefined;
-
-  private page$ = new BehaviorSubject(1);
-  private searchTerm$ = new BehaviorSubject('');
 
   @ViewChild('infiniteAnchor', { static: true })
   infiniteAnchor!: ElementRef<HTMLDivElement>;
-  loading$ = new BehaviorSubject(false);
-  isFirstLoad$ = new BehaviorSubject(true);
-
-  characters$ = combineLatest([this.page$, this.searchTerm$]).pipe(
-    switchMap(([page, search]) => {
-      if (!this.loading$.value) {
-        this.loading$.next(true);
-
-        return this.apiService.findAll({ page, name: search }).pipe(
-          finalize(() => {
-            this.loading$.next(false);
-            this.isFirstLoad$.next(false);
-          })
-        );
-      }
-
-      return [];
-    }),
-    scan((acc: TypeCharacter[], res) => {
-      if (res.info?.prev === null) {
-        this.totalPage = res.info?.pages ?? 1;
-        return res.results;
-      }
-      return [...acc, ...res.results];
-    }, [])
-  );
+  loading$ = this.state.loading$;
+  isFirstLoad$ = this.state.isFirstLoad$;
+  characters$ = this.state.characters$;
+  searchTerm$ = this.state.searchTerm$;
 
   ngAfterViewInit() {
+    this.state.initIfNeeded();
     if (isPlatformBrowser(this.platformId)) {
       const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
@@ -67,19 +40,10 @@ export class CharactersPage implements AfterViewInit {
   }
 
   onSearch(term: string) {
-    this.page$.next(1);
-    this.searchTerm$.next(term.trim());
+    this.state.search(term);
   }
 
   loadMore() {
-    const result = this.page$.value + 1;
-
-    if (
-      !this.loading$.value &&
-      (this.totalPage === undefined || result <= this.totalPage) &&
-      !this.loading$.value
-    ) {
-      this.page$.next(result);
-    }
+    this.state.loadMore();
   }
 }
