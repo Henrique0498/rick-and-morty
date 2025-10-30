@@ -1,0 +1,172 @@
+<main>
+  <section class="container d-flex flex-column align-items-center pt-5 gap-4">
+    <h1 class="title">
+      Bem-vindo ao
+      <span>Rick and Morty</span>
+    </h1>
+
+    <p class="text-center text-muted mb-0" style="max-width: 48rem">
+      Uma aplicação Angular para explorar personagens, episódios e locais do universo Rick and
+      Morty. Navegue pelos recursos, pesquise, veja detalhes e divirta-se.
+    </p>
+
+    <picture class="picture border border-4 border-dark border-bottom-0">
+      <source srcset="images/dashboard-rick-and-morty.jpg" type="image/svg+xml" />
+      <img src="images/dashboard-rick-and-morty.jpg" alt="Imagem do Rick e Morty" />
+    </picture>
+  </section>
+
+  <section class="py-5 bg-light border-top border-4 border-dark">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Personagens</h5>
+              <p class="card-text flex-grow-1">
+                Lista infinita com busca por nome e página de detalhes.
+              </p>
+              <a class="btn btn-primary w-100" [routerLink]="'/characters'">Explorar personagens</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Episódios</h5>
+              <p class="card-text flex-grow-1">
+                Catálogo de episódios com detalhes e relação com personagens.
+              </p>
+              <a class="btn btn-primary w-100" [routerLink]="'/episodes'">Ver episódios</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Locais</h5>
+              <p class="card-text flex-grow-1">
+                Descubra dimensões, planetas e locais icônicos da série.
+              </p>
+              <a class="btn btn-primary w-100" [routerLink]="'/locations'">Explorar locais</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-12 col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Perfil</h5>
+              <p class="card-text flex-grow-1">Página de perfil protegida por guarda de rota.</p>
+              <a class="btn btn-outline-secondary w-100" [routerLink]="'/profile'">Abrir perfil</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Login</h5>
+              <p class="card-text flex-grow-1">Fluxo de autenticação simples (rota de login).</p>
+              <a class="btn btn-outline-secondary w-100" [routerLink]="'/auth/login'"
+                >Ir para login</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 bg-dark text-light">
+    <div class="container">
+      <h2 class="h4 mb-4">Visão geral (ao vivo)</h2>
+      <div class="row g-3" *ngIf="stats$ | async as s">
+        <div class="col-12 col-md-4">
+          <div class="p-4 bg-secondary rounded-3 text-center">
+            <div class="display-6 fw-bold">{{ s.characters }}</div>
+            <div>Personagens</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="p-4 bg-secondary rounded-3 text-center">
+            <div class="display-6 fw-bold">{{ s.episodes }}</div>
+            <div>Episódios</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="p-4 bg-secondary rounded-3 text-center">
+            <div class="display-6 fw-bold">{{ s.locations }}</div>
+            <div>Locais</div>
+          </div>
+        </div>
+      </div>
+      <p class="mb-0 mt-3 text-muted">Fonte: rickandmortyapi.com</p>
+    </div>
+  </section>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-12 col-lg-7">
+          <h2 class="h4">Sobre o projeto</h2>
+          <p>
+            App em Angular 20 consumindo a API pública do Rick and Morty, com páginas para
+            personagens, episódios e locais, busca, paginação infinita e rotas protegidas.
+          </p>
+          <ul class="mb-3">
+            <li>Angular 20, TypeScript e RxJS 7</li>
+            <li>Roteamento por features e lazy loading</li>
+            <li>Infinte scroll e busca (personagens)</li>
+            <li>Guarda de rota para página de perfil</li>
+            <li>Estilo com Bootstrap 5</li>
+          </ul>
+          <a
+            class="btn btn-outline-dark me-2"
+            href="https://github.com/Henrique0498/rick-and-morty"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Ver código no GitHub</a
+          >
+          <a
+            class="btn btn-outline-primary"
+            href="https://rickandmortyapi.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >API Rick and Morty</a
+          >
+        </div>
+        <div class="col-12 col-lg-5">
+          <h3 class="h5">Tecnologias</h3>
+          <div class="row row-cols-2 g-2">
+            <div class="col"><span class="badge bg-dark w-100 py-2">Angular 20</span></div>
+            <div class="col"><span class="badge bg-secondary w-100 py-2">RxJS</span></div>
+            <div class="col"><span class="badge bg-dark w-100 py-2">NgRx Store</span></div>
+            <div class="col"><span class="badge bg-secondary w-100 py-2">Bootstrap 5</span></div>
+            <div class="col"><span class="badge bg-dark w-100 py-2">Toastr</span></div>
+            <div class="col"><span class="badge bg-secondary w-100 py-2">date-fns</span></div>
+            <div class="col"><span class="badge bg-dark w-100 py-2">SSR-ready</span></div>
+            <div class="col"><span class="badge bg-secondary w-100 py-2">TypeScript</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-4 bg-light border-top">
+    <div
+      class="container d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2"
+    >
+      <p class="mb-0">
+        Desenvolvido por <strong>Henrique0498</strong> •
+        <a href="https://github.com/Henrique0498" target="_blank" rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </p>
+      <p class="mb-0 text-muted">Projeto para fins de estudo e demonstração.</p>
+    </div>
+  </section>
+</main>

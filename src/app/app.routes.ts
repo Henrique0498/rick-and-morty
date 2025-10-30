@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { DashboardPage } from './features/dashboard/pages/dashboard';
+import { DashboardPage } from './features/dashboards/pages/dashboard/dashboard';
 import { NotFoundPage } from './features/notfound/page/notfound';
 import { authGuard } from '@core/guards/auth-guard';
 
