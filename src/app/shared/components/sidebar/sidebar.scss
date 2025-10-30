@@ -1,10 +1,11 @@
 .sidebar-container {
-  display: none;
-  width: 5.25rem;
+  width: 0px;
   transition: all 0.3s ease;
+  z-index: 100;
+  position: relative;
 
   &.open {
-    width: 25rem;
+    width: 0px;
   }
 
   .btn-toggle-menu {
@@ -20,13 +21,14 @@
   }
 
   .sidebar {
-    width: 5.25rem;
+    width: 100vw;
     height: calc(100vh - 4.25rem);
     position: fixed;
     transition: all 0.3s ease;
+    left: 100vw;
 
     &.open {
-      width: 25rem;
+      left: 0px;
     }
 
     .nav {
@@ -63,11 +65,39 @@
         }
       }
     }
+
+    .dropdown {
+      border-radius: 0.25rem;
+
+      .dropdown-toggle {
+        padding: 0.75rem;
+        cursor: pointer;
+      }
+    }
+
+    .auth-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   .sidebar-container {
-    display: block;
+    width: 5.25rem;
+
+    &.open {
+      width: 25rem;
+    }
+
+    .sidebar {
+      width: 5.25rem;
+      left: 0px;
+
+      &.open {
+        width: 25rem;
+      }
+    }
   }
 }

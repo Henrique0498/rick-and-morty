@@ -3,10 +3,6 @@
     class="d-flex flex-column flex-shrink-0 p-3 sidebar border-end bg-light"
     [class.open]="isMenuOpen()"
   >
-    <button class="btn-toggle-menu" (click)="toggleMenu()">
-      <ng-icon name="heroBars3" size="32px" />
-    </button>
-
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
         <a
@@ -49,5 +45,37 @@
         </a>
       </li>
     </ul>
+
+    <div class="content-auth">
+      @if (user$ | async; as user) {
+      <div class="dropdown border">
+        <div
+          class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img [src]="user.avatar" alt="" width="32" height="32" class="rounded-circle me-2" />
+          <span>{{ user.name }}</span>
+        </div>
+
+        <ul
+          class="dropdown-menu dropdown-menu-light text-small shadow"
+          aria-labelledby="dropdownUser1"
+        >
+          <li><a class="dropdown-item" routerLink="/profile">Perfil</a></li>
+
+          <li><hr class="dropdown-divider" /></li>
+
+          <li><button class="dropdown-item" (click)="logout()">Sair</button></li>
+        </ul>
+      </div>
+      } @else {
+      <div class="auth-buttons">
+        <a routerLink="/auth/login" class="btn btn-outline-secondary">Entrar</a>
+        <a routerLink="/auth/sing-up" class="btn btn-primary">Cadastrar</a>
+      </div>
+      }
+    </div>
   </div>
 </div>

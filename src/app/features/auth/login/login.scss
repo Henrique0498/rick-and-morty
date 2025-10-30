@@ -1,10 +1,16 @@
 section {
   height: calc(100vh - 4rem);
+  padding: 1rem;
 }
 
 form {
   display: grid;
   gap: 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 25rem;
 }
 
 a {
