@@ -1,9 +1,66 @@
 .sidebar-container {
-  width: 250px;
+  width: 5.25rem;
+  transition: all 0.3s ease;
+
+  &.open {
+    width: 25rem;
+  }
+
+  .btn-toggle-menu {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: auto;
+    padding: 0.5rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
 
   .sidebar {
-    width: 250px;
+    width: 5.25rem;
     height: calc(100vh - 4.25rem);
     position: fixed;
+    transition: all 0.3s ease;
+
+    &.open {
+      width: 25rem;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow: hidden;
+
+      li {
+        width: 100%;
+
+        .nav-link {
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 1rem;
+          flex-wrap: nowrap;
+          text-wrap: nowrap;
+
+          i {
+            font-size: 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: fit-content;
+          }
+
+          span {
+            flex: 1;
+          }
+        }
+      }
+    }
   }
 }

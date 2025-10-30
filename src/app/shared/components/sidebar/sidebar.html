@@ -1,5 +1,12 @@
-<div class="sidebar-container">
-  <div class="d-flex flex-column flex-shrink-0 p-3 sidebar border-end bg-light">
+<div class="sidebar-container" [class.open]="isMenuOpen()">
+  <div
+    class="d-flex flex-column flex-shrink-0 p-3 sidebar border-end bg-light"
+    [class.open]="isMenuOpen()"
+  >
+    <button class="btn-toggle-menu" (click)="toggleMenu()">
+      <ng-icon name="heroBars3" size="32px" />
+    </button>
+
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
         <a
@@ -8,20 +15,38 @@
           [routerLinkActive]="'active'"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <ng-icon name="heroHome" size="24px" />
-          Página inicial</a
-        >
+          <i>
+            <ng-icon name="heroHome" />
+          </i>
+          <span> Página inicial </span>
+        </a>
       </li>
+
       <li>
         <a class="nav-link" routerLink="/characters" [routerLinkActive]="'active'">
-          <ng-icon name="heroHome" size="24px" />Personagens</a
-        >
+          <i>
+            <ng-icon name="heroUsers" />
+          </i>
+          <span> Personagens </span>
+        </a>
       </li>
+
       <li>
-        <a class="nav-link" routerLink="/locations" [routerLinkActive]="'active'">Localizações</a>
+        <a class="nav-link" routerLink="/locations" [routerLinkActive]="'active'">
+          <i>
+            <ng-icon name="heroMapPin" />
+          </i>
+          <span>Localizações</span>
+        </a>
       </li>
+
       <li>
-        <a class="nav-link" routerLink="/episodes" [routerLinkActive]="'active'">Episódios</a>
+        <a class="nav-link" routerLink="/episodes" [routerLinkActive]="'active'">
+          <i>
+            <ng-icon name="heroPlay" />
+          </i>
+          <span>Episódios</span>
+        </a>
       </li>
     </ul>
   </div>

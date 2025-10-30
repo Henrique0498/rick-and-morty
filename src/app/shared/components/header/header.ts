@@ -15,12 +15,6 @@ export class HeaderComponent {
   router = inject(Router);
   user$ = this.store.select(selectUser);
 
-  isMenuOpen = signal(false);
-
-  toggleMenu() {
-    this.isMenuOpen.update((isOpen) => !isOpen);
-  }
-
   logout() {
     this.store.dispatch({ type: '[Auth] Logout' });
     this.router.navigate(['/auth/login']);
