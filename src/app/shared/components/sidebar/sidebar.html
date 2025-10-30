@@ -64,11 +64,7 @@
 
     <div class="content-auth">
       @if (user$ | async; as user) {
-      <div class="dropdown border">
-        <li>
-          <a class="dropdown-item" routerLink="/profile" (click)="closeMenuIfMobile()">Perfil</a>
-        </li>
-
+      <div class="dropdown border dropdown-profile">
         <div
           class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer"
           id="dropdownUser1"
