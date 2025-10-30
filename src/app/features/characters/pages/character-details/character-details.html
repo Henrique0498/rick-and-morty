@@ -7,7 +7,13 @@
   </section>
 
   <section class="row section-details">
-    @if(character$ | async ; as character){
+    @if (loading()) {
+    <div class="d-flex justify-content-center gap-3">
+      <span class="spinner-border text-primary" role="status" aria-label="Carregando..."></span>
+
+      <div>Carregando...</div>
+    </div>
+    } @else if(character$ | async ; as character){
     <div class="card">
       <div class="card-img-top d-flex justify-content-center align-items-center p-4">
         <img
@@ -31,6 +37,8 @@
         <p><strong>Data de Criação:</strong> {{ character.created | date : 'longDate' }}</p>
       </div>
     </div>
+    } @else {
+    <component-not-found title="Personagem não encontrado" />
     }
   </section>
 </main>
