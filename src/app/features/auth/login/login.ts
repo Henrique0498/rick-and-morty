@@ -41,6 +41,7 @@ export class LoginPage {
 
     this.loading = true;
     this.error = null;
+    this.cdr.detectChanges();
 
     const { email, password } = this.form.value;
 
@@ -49,6 +50,7 @@ export class LoginPage {
       .pipe(
         finalize(() => {
           this.loading = false;
+          // Ensure UI reflects the final state after success/error
           this.cdr.detectChanges();
         })
       )
@@ -61,9 +63,6 @@ export class LoginPage {
           const message = err.message ?? 'Falha ao fazer login. Tente novamente.';
 
           this.toastr.error(message, 'Erro ao fazer login');
-
-          this.loading = false;
-          this.cdr.detectChanges();
         },
       });
   }

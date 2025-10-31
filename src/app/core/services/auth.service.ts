@@ -11,6 +11,7 @@ export interface User {
   email: string;
   birthDate: string;
   avatar: string;
+  password: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -24,6 +25,7 @@ export class AuthService {
       email: 'henrique@example.com',
       birthDate: '1990-01-01',
       avatar: 'https://avatars.githubusercontent.com/u/39716479?v=4',
+      password: '123',
     },
   ];
 
@@ -31,7 +33,7 @@ export class AuthService {
     return of(this.users).pipe(
       delay(1000),
       map((users) => {
-        const user = users.find((user) => user.email === email);
+        const user = users.find((user) => user.email === email && user.password === password);
 
         if (!user) {
           throw new Error('Credenciais inválidas');
@@ -62,6 +64,7 @@ export class AuthService {
           name: payload.name,
           email: payload.email,
           birthDate: payload.birthDate,
+          password: payload.password,
           avatar: payload.avatar || 'https://i.pravatar.cc/300?img=24',
         };
 

@@ -9,7 +9,7 @@ import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'login-page',
+  selector: 'sing-up-page',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './sing-up.html',
@@ -44,6 +44,7 @@ export class SingUpPage {
 
     this.loading = true;
     this.error = null;
+    this.cdr.detectChanges();
 
     const { name, email, password, confirmPassword, birthdate } = this.form.value;
 
@@ -74,7 +75,9 @@ export class SingUpPage {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          this.error = err.message ?? 'Falha ao cadastrar. Tente novamente.';
+          const message = err.message ?? 'Falha ao cadastrar. Tente novamente.';
+          this.error = message;
+          this.toastr.error(message, 'Erro no cadastro');
         },
       });
   }
