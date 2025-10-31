@@ -26,13 +26,3 @@ export interface TypeCharacter {
   url: string;
   created: string;
 }
-
-export interface TypeGetAllCharacters {
-  info: {
-    count: number;
-    pages: number;
-    next: string | null;
-    prev: string | null;
-  };
-  results: TypeCharacter[];
-}

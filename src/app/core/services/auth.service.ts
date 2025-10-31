@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { delay, finalize, map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+import * as AuthActions from '@core/store/auth/auth.actions';
 
 export interface User {
   id: number;
@@ -12,6 +15,8 @@ export interface User {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private store = inject(Store);
+  private router = inject(Router);
   private users: User[] = [
     {
       id: 1,
@@ -68,11 +73,7 @@ export class AuthService {
   }
 
   logout() {
-    return of(null).pipe(
-      delay(500),
-      finalize(() => {
-        localStorage.removeItem('auth_token');
-      })
-    );
+    this.store.dispatch(AuthActions.logout());
+    this.router.navigate(['/auth/login']);
   }
 }

@@ -12,7 +12,6 @@ registerLocaleData(ptBr);
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, FooterComponent, SidebarComponent],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class App {

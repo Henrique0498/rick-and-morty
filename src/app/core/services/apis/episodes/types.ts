@@ -14,13 +14,3 @@ export interface TypeEpisode {
   url: string;
   created: string;
 }
-
-export interface TypeGetAllEpisodes {
-  info: {
-    count: number;
-    pages: number;
-    next: string | null;
-    prev: string | null;
-  };
-  results: TypeEpisode[];
-}

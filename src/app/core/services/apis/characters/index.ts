@@ -1,20 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Type } from '@angular/core';
-import { environment } from '../../../../../environments/environment';
-import { TypeCharacter, TypeFindParams, TypeGetAllCharacters } from './types';
+import { Injectable } from '@angular/core';
+import { TypeCharacter, TypeFindParams } from './types';
+import { BaseApiService } from '@core/services/apis/base-api.service';
+import { TypeGetAll } from '../type';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CharactersApiService {
-  private _baseUrl = `${environment.apiUrl}/character`;
-
-  constructor(private httpCLient: HttpClient) {}
-  findAll(params: TypeFindParams) {
-    return this.httpCLient.get<TypeGetAllCharacters>(this._baseUrl, { params });
-  }
-
-  findOne(id: number | string) {
-    return this.httpCLient.get<TypeCharacter>(`${this._baseUrl}/${id}`);
+export class CharactersApiService extends BaseApiService<
+  TypeGetAll<TypeCharacter>,
+  TypeCharacter,
+  TypeFindParams
+> {
+  constructor(httpClient: HttpClient) {
+    super(httpClient, `${environment.apiUrl}/character`);
   }
 }

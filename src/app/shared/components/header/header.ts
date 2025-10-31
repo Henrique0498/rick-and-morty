@@ -1,11 +1,12 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { selectUser } from '@core/store/auth/auth.selectors';
 import { Store } from '@ngrx/store';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { heroBars3 } from '@ng-icons/heroicons/outline';
 import { SidebarService } from '@shared/services/sidebar.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'component-header',
@@ -17,12 +18,11 @@ import { SidebarService } from '@shared/services/sidebar.service';
 export class HeaderComponent {
   private store = inject(Store);
   private sidebar = inject(SidebarService);
-  router = inject(Router);
+  private auth = inject(AuthService);
   user$ = this.store.select(selectUser);
 
   logout() {
-    this.store.dispatch({ type: '[Auth] Logout' });
-    this.router.navigate(['/auth/login']);
+    this.auth.logout();
   }
 
   toggleMenu() {
