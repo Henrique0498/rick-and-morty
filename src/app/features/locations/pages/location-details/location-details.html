@@ -1,0 +1,33 @@
+<main class="container">
+  <section class="row">
+    <div class="my-4 d-flex align-items-center gap-3">
+      <a routerLink="/locations" class="btn btn-secondary">Voltar</a>
+      <h2>Detalhes da Localização</h2>
+    </div>
+  </section>
+
+  <section class="row section-details">
+    @if (loading()) {
+    <div class="d-flex justify-content-center gap-3">
+      <span class="spinner-border text-primary" role="status" aria-label="Carregando..."></span>
+
+      <div>Carregando...</div>
+    </div>
+    } @else if (location$ | async; as location) {
+    <div class="card">
+      <div class="card-header">
+        <h1>{{ location.name }}</h1>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Tipo:</strong> {{ location.type }}</p>
+        <p><strong>Dimensão:</strong> {{ location.dimension }}</p>
+        <p><strong>Número de Residentes:</strong> {{ location.residents.length }}</p>
+        <p><strong>Data de Criação:</strong> {{ location.created | date : 'longDate' }}</p>
+      </div>
+    </div>
+    } @else {
+    <component-not-found title="Localização não encontrada" />
+    }
+  </section>
+</main>

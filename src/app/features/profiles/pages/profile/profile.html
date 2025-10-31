@@ -1,0 +1,28 @@
+<main>
+  <section class="container">
+    @if (user$ | async; as user) {
+    <div class="profile-content">
+      <div class="profile-card border">
+        <div class="profile-photo-content">
+          <img [src]="user.avatar" alt="{{ user.name }}" class="profile-photo" />
+        </div>
+
+        <div class="profile-card_header bg-light">
+          <h1>{{ user.name }}</h1>
+        </div>
+
+        <div class="profile-card_body">
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Data de aniversário:</strong> {{ user.birthDate | date : 'longDate' }}</p>
+        </div>
+      </div>
+    </div>
+    } @else {
+    <div class="container-loading d-flex justify-content-center gap-3">
+      <span class="spinner-border text-primary" role="status" aria-label="Carregando..."></span>
+
+      <div>Carregando...</div>
+    </div>
+    }
+  </section>
+</main>

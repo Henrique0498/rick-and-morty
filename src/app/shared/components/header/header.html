@@ -1,30 +1,50 @@
-<header class="sticky-top bg-white">
-  <div>
-    <div class="container-xxl d-flex justify-content-between align-items-center py-3 border-bottom">
+<header class="sticky-top bg-white border-bottom">
+  <div class="container d-flex justify-content-between align-items-center py-3">
+    <button
+      class="btn btn-outline-secondary d-inline-flex align-items-center"
+      (click)="toggleMenu()"
+      aria-label="Alternar menu"
+    >
+      <ng-icon name="heroBars3" size="20px"></ng-icon>
+    </button>
+
+    <div class="d-flex align-items-center gap-3">
       <a routerLink="/">
         <span class="title h4">Rick and Morty</span>
       </a>
+    </div>
 
-      <nav>
-        <ul class="d-flex gap-4 nav-list">
-          <li>
-            <a
-              routerLink="/"
-              [routerLinkActive]="'active'"
-              [routerLinkActiveOptions]="{ exact: true }"
-              >Página inicial</a
-            >
-          </li>
-          <li><a routerLink="/characters" [routerLinkActive]="'active'">Personagens</a></li>
-          <li><a routerLink="/locations" [routerLinkActive]="'active'">Localizações</a></li>
-          <li><a routerLink="/episodes" [routerLinkActive]="'active'">Episódios</a></li>
+    <div class="content-auth">
+      @if (user$ | async; as user) {
+      <div class="dropdown">
+        <div
+          class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img [src]="user.avatar" alt="" width="32" height="32" class="rounded-circle me-2" />
+          <span>{{ user.name }}</span>
+        </div>
+
+        <ul
+          class="dropdown-menu dropdown-menu-light text-small shadow"
+          aria-labelledby="dropdownUser1"
+        >
+          <li><a class="dropdown-item" routerLink="/profile">Perfil</a></li>
+
+          <li><hr class="dropdown-divider" /></li>
+
+          <li><button class="dropdown-item" (click)="logout()">Sair</button></li>
         </ul>
-      </nav>
-
-      <div class="d-flex gap-2">
-        <component-button variant="outline-primary">Login</component-button>
-        <component-button variant="primary">Sign Up</component-button>
       </div>
+      } @else {
+      <div class="d-flex gap-2">
+        <a routerLink="/auth/login" class="btn btn-outline-secondary">Entrar</a>
+        <a routerLink="/auth/sing-up" class="btn btn-primary">Cadastrar</a>
+      </div>
+
+      }
     </div>
   </div>
 </header>

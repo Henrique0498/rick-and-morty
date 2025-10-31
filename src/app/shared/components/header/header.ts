@@ -1,15 +1,31 @@
-import { Component, signal } from '@angular/core';
-import { ButtonComponent } from '../button/button';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { selectUser } from '@core/store/auth/auth.selectors';
+import { Store } from '@ngrx/store';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { heroBars3 } from '@ng-icons/heroicons/outline';
+import { SidebarService } from '@shared/services/sidebar.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'component-header',
-  imports: [ButtonComponent, RouterLink, RouterLinkActive],
+  imports: [RouterLink, AsyncPipe, NgIcon],
   templateUrl: './header.html',
   styleUrl: './header.scss',
+  providers: [provideIcons({ heroBars3 })],
 })
 export class HeaderComponent {
-  protected readonly title = signal('rick-and-morty');
-  teste = 'Titulo';
-  subtitle = 'A simple application to browse the Rick and Morty API';
+  private store = inject(Store);
+  private sidebar = inject(SidebarService);
+  private auth = inject(AuthService);
+  user$ = this.store.select(selectUser);
+
+  logout() {
+    this.auth.logout();
+  }
+
+  toggleMenu() {
+    this.sidebar.toggle();
+  }
 }

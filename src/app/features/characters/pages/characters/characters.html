@@ -1,0 +1,84 @@
+<main>
+  <section class="container section-header">
+    <h1 class="title">Personagens de<span>Rick e Morty</span></h1>
+
+    <picture class="picture">
+      <source srcset="images/bg-characters.png" type="image/svg+xml" />
+      <img src="images/bg-characters.png" alt="Imagem do Rick e Morty" />
+    </picture>
+  </section>
+
+  <section class="bg-dark section-table">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 d-flex">
+          <h2 class="text-white">Filtro de Personagens</h2>
+        </div>
+
+        <div class="col-12 col-md-6 ms-auto d-flex">
+          <input
+            class="form-control w-100"
+            type="search"
+            placeholder="Pesquisar personagem..."
+            [value]="(searchTerm$ | async) ?? ''"
+            (input)="onSearch($any($event.target).value)"
+          />
+        </div>
+      </div>
+
+      <div class="row max-w-100 overflow-auto">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col" class="th-id">#</th>
+                <th scope="col" class="th-primary">Nome</th>
+                <th scope="col" class="th-secondary">Gênero</th>
+                <th scope="col" class="th-actions">Ações</th>
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              @for(character of characters$ | async; track character.id){
+              <tr>
+                <th scope="row">
+                  {{ character.id }}
+                </th>
+                <td>
+                  <div class="td-content-image">
+                    <img
+                      [src]="character.image"
+                      [alt]="'Imagem de ' + character.name"
+                      class="table-character-image"
+                    />
+                    <div>
+                      {{ character.name }}
+                    </div>
+                  </div>
+                </td>
+                <td>{{ character.gender | genderFormat }}</td>
+                <td>
+                  <a class="btn btn-primary btn-sm" [routerLink]="['/characters', character.id]"
+                    >Detalhes</a
+                  >
+                </td>
+              </tr>
+              } @if(loading$ | async){
+              <tr>
+                <td colspan="4" [class.table-loading]="isFirstLoad$ | async" class="text-center">
+                  Carregando...
+                </td>
+              </tr>
+              } @else if((characters$ | async)?.length === 0){
+              <tr>
+                <td colspan="4" class="text-center">Nenhum personagem encontrado.</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div #infiniteAnchor style="height: 1px"></div>
+    </div>
+  </section>
+</main>

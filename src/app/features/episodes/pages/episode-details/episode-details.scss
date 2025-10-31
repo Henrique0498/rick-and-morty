@@ -1,0 +1,18 @@
+.section-details {
+  padding: 1rem;
+  min-height: calc(100vh - 9.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: fit-content;
+  padding: 0;
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

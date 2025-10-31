@@ -1,0 +1,31 @@
+main {
+  background-image: url('/images/bg-sing-up.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-position-x: left;
+}
+
+section {
+  min-height: calc(100vh - 4rem);
+  padding: 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 25rem;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+a {
+  color: var(--bs-link-color);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
