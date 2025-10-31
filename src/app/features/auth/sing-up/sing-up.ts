@@ -70,7 +70,6 @@ export class SingUpPage {
       )
       .subscribe({
         next: ({ user, token }) => {
-          localStorage.setItem('auth_token', token);
           this.store.dispatch(loginSuccess({ user, token }));
           this.router.navigate(['/']);
         },

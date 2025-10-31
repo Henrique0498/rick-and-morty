@@ -1,6 +1,6 @@
 <main>
-  @if (user$ | async; as user) {
   <section class="container">
+    @if (user$ | async; as user) {
     <div class="profile-content">
       <div class="profile-card border">
         <div class="profile-photo-content">
@@ -17,6 +17,12 @@
         </div>
       </div>
     </div>
+    } @else {
+    <div class="container-loading d-flex justify-content-center gap-3">
+      <span class="spinner-border text-primary" role="status" aria-label="Carregando..."></span>
+
+      <div>Carregando...</div>
+    </div>
+    }
   </section>
-  }
 </main>

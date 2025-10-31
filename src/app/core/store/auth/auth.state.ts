@@ -7,13 +7,32 @@ export interface AuthState {
 }
 
 const storedUser = (() => {
-  if (typeof window === 'undefined') return null;
-  const user = localStorage.getItem('user');
-  return user ? JSON.parse(user) : null;
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    const user = localStorage.getItem('user');
+    return user ? (JSON.parse(user) as User) : null;
+  } catch {
+    return null;
+  }
+})();
+
+const storedToken = (() => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    return localStorage.getItem('auth_token');
+  } catch {
+    return null;
+  }
 })();
 
 export const initialAuthState: AuthState = {
   user: storedUser,
-  token: null,
-  loaded: false,
+  token: storedToken,
+  loaded: true,
 };
