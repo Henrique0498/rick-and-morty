@@ -12,7 +12,7 @@ Tempo total de desenvolvimento: 4 dias.
 Use este usuário para login imediato:
 
 - E-mail: <henrique@example.com>
-- Senha: 123
+- Senha: 1234
 
 Você também pode se cadastrar via página de cadastro (mock) e entrar automaticamente após o cadastro.
 

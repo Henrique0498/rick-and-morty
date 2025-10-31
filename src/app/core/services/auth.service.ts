@@ -25,7 +25,7 @@ export class AuthService {
       email: 'henrique@example.com',
       birthDate: '1990-01-01',
       avatar: 'https://avatars.githubusercontent.com/u/39716479?v=4',
-      password: '123',
+      password: '1234',
     },
   ];
 
