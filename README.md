@@ -1,168 +1,171 @@
-# Rick and Morty Explorer 🛸
+# Rick and Morty
 
-Uma aplicação Angular moderna que utiliza a API pública do Rick and Morty para explorar o universo da série. Este projeto apresenta informações detalhadas sobre personagens, localizações e episódios da popular série animada.
+Aplicação Angular moderna com SSR que consome a API pública do Rick and Morty para explorar personagens, localizações e episódios. Deploy e repositório:
 
-## 🚀 Tecnologias Utilizadas
+- Demo (SSR): <https://rick-morty-henrique.vercel.app/>
+- Repositório: <https://github.com/Henrique0498/rick-and-morty>
 
-- **Angular 20.3.0** - Framework principal
-- **Angular SSR** - Server-Side Rendering
-- **NgRx Store** - Gerenciamento de estado
-- **Bootstrap 5.3.8** - Framework CSS
-- **RxJS** - Programação reativa
-- **TypeScript** - Linguagem de programação
+Tempo total de desenvolvimento: 4 dias.
 
-## 📋 Funcionalidades
+## Usuário de Teste (pré-carregado)
 
-### 🔐 Login
+Use este usuário para login imediato:
 
-Página de autenticação para acesso ao sistema com formulário de login seguro.
+- E-mail: <henrique@example.com>
+- Senha: 123
 
-### 🏠 Dashboard (`/`)
+Você também pode se cadastrar via página de cadastro (mock) e entrar automaticamente após o cadastro.
 
-Página inicial com visão geral e estatísticas do universo Rick and Morty, apresentando dados gerais da API e navegação principal.
+## Tecnologias
 
-### 👥 Personagens (`/characters`)
+- Angular 20 (standalone components) + SSR (@angular/ssr)
+- NgRx Store (estado de autenticação, persistência em localStorage)
+- RxJS (streams e controle de estado reativo)
+- Bootstrap 5 + SCSS (UI responsiva)
+- ngx-toastr (notificações)
+- @ng-icons/heroicons (ícones)
 
-Lista de personagens do universo Rick and Morty com informações básicas de cada personagem.
+## Páginas e Fluxos
 
-**Detalhes do Personagem (`/characters/:id`)**
-Página dedicada com informações completas sobre um personagem específico, incluindo status, espécie, gênero, origem e localização atual.
+- Autenticação
+- Login: formulário com validação, loading e feedback via Toastr; após sucesso, redireciona para o dashboard.
+- Cadastro: formulário com validação, confirmação de senha e login automático após cadastro.
+- Logout centralizado: via AuthService.logout(), limpa store/localStorage e redireciona para /auth/login.
 
-### 🌍 Localizações (`/locations`)
+- Dashboard (`/`)
+- Apresentação do projeto, atalhos para features e estatísticas ao vivo (contagem de personagens, episódios e localizações) consumidas da API.
 
-Catálogo de todas as localizações e dimensões do universo Rick and Morty.
+- Personagens (`/characters`)
+- Lista com busca por nome e paginação infinita (IntersectionObserver).
+- Estado de busca persistido ao navegar entre rotas (termo e página retornam ao voltar).
+- Detalhes (`/characters/:id`): status, espécie, gênero (pipe de formatação), origem e localização.
 
-**Detalhes da Localização (`/locations/:id`)**
-Informações detalhadas sobre uma localização específica, incluindo tipo, dimensão e lista de residentes conhecidos.
+- Localizações (`/locations`)
+- Lista com busca por nome e paginação infinita.
+- Detalhes (`/locations/:id`): tipo, dimensão e residentes.
 
-### 📺 Episódios (`/episodes`)
+- Episódios (`/episodes`)
+- Lista com busca por nome e paginação infinita.
+- Detalhes (`/episodes/:id`): código, nome, data e personagens participantes.
 
-Lista completa de episódios da série com informações básicas de cada um.
+- Não encontrado (`*`)
+- Página 404 para rotas inexistentes.
 
-**Detalhes do Episódio (`/episodes/:id`)**
-Página com informações completas do episódio, incluindo código, nome, data de exibição e lista de personagens que aparecem.
+  Observação: existe uma página de Perfil (em construção) nas rotas lazy.
 
-## 🌐 API
+## Versão Mobile
 
-Este projeto consome dados da [Rick and Morty API](https://rickandmortyapi.com/), uma API REST pública que fornece informações sobre:
+- Layout responsivo com Bootstrap 5.
+- Sidebar com auto-fechamento ao clicar em links quando a largura da janela < 768px.
+- Inputs e tabelas adaptados para telas pequenas.
 
-- 826+ Personagens com detalhes individuais
-- 126+ Localizações de diferentes dimensões
-- 51+ Episódios com informações completas
+## Arquitetura e Como Funciona
 
-### Endpoints Utilizados
+- SSR e Prerender
+- Rotas estáticas são prerenderizadas; rotas dinâmicas usam renderização no servidor.
+- Server custom em `src/server.ts` (Express) para integração SSR.
 
-- `GET /character` - Lista de personagens
-- `GET /character/:id` - Detalhes de um personagem específico
-- `GET /location` - Lista de localizações
-- `GET /location/:id` - Detalhes de uma localização específica
-- `GET /episode` - Lista de episódios
-- `GET /episode/:id` - Detalhes de um episódio específico
+- Estado e Persistência
+- Auth no NgRx: loginSuccess e logout atualizam store e localStorage (user e token).
+- Na inicialização, o estado lê user/token do localStorage para evitar logout ao recarregar.
 
-## 🛠️ Instalação e Execução
+- Busca com Estado Persistente
+- Serviços de estado (Characters/Episodes/Locations) guardam termo da busca, página e resultados acumulados (BehaviorSubject), mantendo a posição ao navegar.
 
-### Pré-requisitos
+- Detecção de Mudanças Zoneless
+- O app usa provideZonelessChangeDetection(). Operações assíncronas disparam `ChangeDetectorRef.detectChanges()` em pontos-chave (ex.: ao setar loading) para refletir o UI imediatamente.
 
-- Node.js (versão 18 ou superior)
-- npm ou yarn
+- Serviços de API DRY
+- `BaseApiService` padroniza `findAll` e `findOne`; serviços específicos apenas configuram baseUrl e tipos.
 
-### Instalação
+## API
+
+API pública: <https://rickandmortyapi.com/>
+
+Endpoints principais utilizados:
+
+- `GET /character` e `GET /character/:id`
+- `GET /location` e `GET /location/:id`
+- `GET /episode` e `GET /episode/:id`
+
+## 🛠️ Como rodar
+
+Pré-requisitos: Node 18+ e npm.
+
+Instalação:
 
 ```bash
-# Clone o repositório
 git clone https://github.com/Henrique0498/rick-and-morty
-
-# Navegue até o diretório
 cd rick-and-morty
-
-# Instale as dependências
 npm install
 ```
 
-### Desenvolvimento
+Desenvolvimento:
 
 ```bash
-# Inicie o servidor de desenvolvimento
 npm start
-
-# Ou usando Angular CLI
-ng serve
+# app em http://localhost:4200/
 ```
 
-Acesse `http://localhost:4200/` no seu navegador.
-
-### Build de Produção
+Build de produção + SSR:
 
 ```bash
-# Build para produção
 npm run build
-
-# Servir aplicação com SSR
 npm run serve:ssr:rick-and-morty
+# SSR em http://localhost:4000/ (conforme config do Angular SSR)
 ```
 
-## 🧪 Testes
+## Testes
 
 ```bash
-# Executar testes unitários
 npm test
-
-# Executar testes em modo watch
-ng test --watch
 ```
 
-## 📁 Estrutura do Projeto
+## Estrutura de Pastas (resumo)
 
 ```text
 src/
 ├── app/
-│   ├── app.config.server.ts     # Configuração do servidor SSR
-│   ├── app.config.ts           # Configuração principal da aplicação
-│   ├── app.html                # Template principal
-│   ├── app.routes.server.ts    # Rotas do servidor
-│   ├── app.routes.ts           # Configuração de rotas
-│   ├── app.scss                # Estilos globais da aplicação
-│   ├── app.spec.ts             # Testes do componente principal
-│   ├── app.ts                  # Componente principal da aplicação
-│   ├── features/               # Páginas e funcionalidades principais
-│   │   ├── characters/         # Funcionalidade de personagens
-│   │   │   └── pages/          # Páginas relacionadas a personagens
-│   │   │       ├── characters.html
-│   │   │       ├── characters.scss
-│   │   │       └── characters.ts
-│   │   ├── dashboard/          # Página inicial/dashboard
-│   │   │   └── pages/          # Página do dashboard
-│   │   │       ├── dashboard.html
-│   │   │       ├── dashboard.scss
-│   │   │       └── dashboard.ts
-│   │   └── notfound/           # Página 404
-│   │       └── page/           # Página de erro 404
-│   │           ├── notfound.html
-│   │           ├── notfound.scss
-│   │           └── notfound.ts
-│   └── shared/                 # Componentes e utilitários compartilhados
-│       └── components/         # Componentes reutilizáveis
-│           ├── button/         # Componente de botão customizado
-│           │   ├── button.html
-│           │   ├── button.scss
-│           │   └── button.ts
-│           └── header/         # Cabeçalho da aplicação
-│               ├── header.html
-│               ├── header.scss
-│               └── header.ts
-├── assets/                     # Recursos estáticos
-│   └── images/                 # Imagens e ícones
-├── index.html                  # Arquivo HTML principal
-├── main.server.ts              # Ponto de entrada do servidor SSR
-├── main.ts                     # Ponto de entrada da aplicação
-├── server.ts                   # Configuração do servidor Express
-└── styles.scss                 # Estilos globais SCSS
+│   ├── app.config.ts              # Providers (SSR, NgRx, HTTP, Toastr, Zoneless, etc.)
+│   ├── app.routes*.ts             # Rotas do app e do servidor
+│   ├── core/
+│   │   ├── guards/                # Auth guard
+│   │   ├── services/
+│   │   │   ├── apis/              # Serviços de API (BaseApiService e recursos)
+│   │   │   └── auth.service.ts    # Mock de autenticação (login/register/logout)
+│   │   └── store/auth/            # NgRx: actions, reducer, selectors, state
+│   ├── features/
+│   │   ├── auth/                  # Login e Cadastro (sing-up)
+│   │   ├── dashboards/            # Dashboard inicial
+│   │   ├── characters/            # Lista e detalhes de personagens
+│   │   ├── locations/             # Lista e detalhes de localizações
+│   │   ├── episodes/              # Lista e detalhes de episódios
+│   │   └── notfound/              # Página 404
+│   └── shared/
+│       ├── components/            # Header, Sidebar, etc.
+│       └── pipes/                 # Pipes utilitários (ex.: gender-format)
+├── main.ts                        # Bootstrap do app
+├── main.server.ts                 # Bootstrap SSR
+├── server.ts                      # Server Express p/ SSR
+└── styles.scss                    # Estilos globais
 ```
 
-## 🎨 Estilização
+## O que foi feito até aqui
 
-O projeto utiliza Bootstrap 5 para um design responsivo e moderno, com customizações específicas em SCSS.
+- Dashboard com destaques, atalhos e estatísticas em tempo real.
+- Busca com estado persistido em Characters/Episodes/Locations e scroll infinito.
+- Sidebar com auto-fechamento no mobile (<768px).
+- SSR: ajuste de prerender para rotas estáticas e renderização server-side para dinâmicas.
+- Limpeza de warnings de build e budgets ajustados.
+- Autenticação: persistência em localStorage, leitura na inicialização, logout centralizado.
+- Correções de UX no modo zoneless (loading imediato em Login e Cadastro).
+- Serviços DRY com BaseApiService e tipos padronizados.
 
-## 📄 Licença
+## Observações
 
-Este projeto é desenvolvido para fins educacionais e utiliza a API pública do Rick and Morty.
+- Autenticação é mockada.
+- Rotas e nomes: a rota de cadastro está como `/auth/sing-up` por convenção interna deste projeto.
+
+  ***
+
+  Feito com Angular 20 e em 4 dias.
